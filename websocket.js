@@ -1,6 +1,9 @@
 import express from "express"
 import {createServer} from "node:http"
 import {Server} from "socket.io"
+import dotenv from "dotenv"
+
+dotenv.config();
 
 const app = express();
 const server = createServer(app);
@@ -20,6 +23,6 @@ io.on('connection', (socket) => {
 })
 
 
-server.listen(8080, () => {
-    console.log("Websocket server started at localhost:8080");
+server.listen(process.env.NODE_ENV === "production" ? process.env.PORT : 8080, () => {
+    console.log("Websocket server started at ", process.env.NODE_ENV === "production" ? process.env.PORT : 8080);
 })
